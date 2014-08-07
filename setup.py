@@ -8,6 +8,10 @@ setup(
   author_email = 'piotr.lizonczyk@gmail.com',
   url = 'https://github.com/plizonczyk/permalink_adder', # use the URL to the github repo
   download_url = 'https://github.com/plizonczyk/permalink_adder/tarball/0.1', # I'll explain this in a second
-  keywords = ['testing', 'logging', 'example'], # arbitrary keywords
-  classifiers = [],
+  keywords = ['SEO', 'permalinks'], # arbitrary keywords
+  classifiers = ['Development Status :: 2 - Pre-Alpha',
+                 'Framework :: Django',
+                 'License :: OSI Approved :: MIT License',
+                 'Programming Language :: Python :: 2.7'],
+  requires = ['django']
 )

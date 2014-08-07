@@ -48,16 +48,17 @@ def add_links(text, matches, url):
     return text
 
 
-def add_permalinks(app, model_name, fields, word, url, dry_run=True):
+def add_permalinks(app, model_name, fields, words, url, dry_run=True):
     texts = collect_text(app, model_name, fields)
-    for text in texts:
-        matches = find_text_occurrences(word, text['content'])
-        obj = text['model'].objects.filter(pk=text['object_pk'])
-        text['content'] = add_links(text['content'], matches, url)
-        if not dry_run:
-            setattr(obj, text['field'], text['content'])
-            for item in obj:
-                item.save()
-        else:
-            print '\nModified text:\n'
-            print text['content']
+    for word in words:
+        for text in texts:
+            matches = find_text_occurrences(word, text['content'])
+            objects = text['model'].objects.filter(pk=text['object_pk'])
+            text['content'] = add_links(text['content'], matches, url)
+            if not dry_run:
+                for item in objects:
+                    setattr(item, text['field'], text['content'])
+                    item.save()
+            else:
+                print '\nModified text:\n'
+                print text['content']
