@@ -1,16 +1,13 @@
 # encoding: utf-8
 from permalink_adder.helpers import add_permalinks
-
+from django.conf import settings
 
 def permalink_adder():
-        app = raw_input('Type in app name: ')
-        model_name = raw_input('Type in model name: ')
-        amount_of_fields = int(raw_input('Type in amount of fields: '))
-        fields = []
-        for i in xrange(amount_of_fields):
-            fields.append(raw_input('Type in field name: '))
-
-        word = raw_input('Type in word to search for: ')
-        url = raw_input('Type in url to wrap the word with: ')
-        dry_run = False if raw_input('Dry run (no change in database)? (yes/no): ').lower() == 'no' else True
-        add_permalinks(app, model_name, fields, word, url, dry_run)
+    for config_set in settings.PERMALINK_ADDER_SETTINGS:
+        app = config_set['app']
+        model_name = config_set['model_name']
+        fields = config_set['fields']
+        words = config_set['words']
+        url = config_set['url']
+        dry_run = config_set['dry_run']
+        add_permalinks(app, model_name, fields, words, url, dry_run)
