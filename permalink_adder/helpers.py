@@ -11,7 +11,8 @@ def collect_text(app, model_name, fields):
             texts.append({'model': model,
                           'object_pk': obj.pk,
                           'field': field,
-                          'content': getattr(obj, field)})
+                          'content': getattr(obj, field),
+                          'modified': False})
 
     return texts
 
@@ -37,14 +38,16 @@ def add_links(text, matches, url):
     offset = 0
 
     for match in matches:
-        prefix = text[:match['start'] + offset]
-        suffix = text[match['end'] + offset:]
+        prefix = text['content'][:match['start'] + offset]
+        suffix = text['content'][match['end'] + offset:]
 
         prefix_tag = '<a href="%s">' % url
         suffix_tag = '</a>'
         offset += len(prefix_tag) + len(suffix_tag)
 
-        text = prefix + prefix_tag + match['word'] + suffix_tag + suffix
+        text['content'] = prefix + prefix_tag + match['word'] + suffix_tag + suffix
+
+        text['modified'] = True
 
     return text
 
@@ -55,11 +58,12 @@ def add_permalinks(app, model_name, fields, words, url, dry_run=True):
         for text in texts:
             matches = find_text_occurrences(word, text['content'])
             objects = text['model'].objects.filter(pk=text['object_pk'])
-            text['content'] = add_links(text['content'], matches, url)
+            text = add_links(text, matches, url)
             if not dry_run:
                 for item in objects:
                     setattr(item, text['field'], text['content'])
                     item.save()
             else:
-                print '\nModified text:\n'
-                print text['content']
+                if text['modified']:
+                    print '\nModified text:\n'
+                    print text['content'] + '\n'

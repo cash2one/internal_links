@@ -2,7 +2,7 @@
 from distutils.core import setup
 setup(
   name = 'permalink_adder',
-  version = '0.1.3',
+  version = '0.1.4',
   description = 'SEO tool for adding permalinks to text contained in Django apps databases.',
   author = u'Piotr Lizończyk',
   author_email = 'piotr.lizonczyk@gmail.com',
