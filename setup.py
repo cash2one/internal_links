@@ -1,8 +1,15 @@
 # coding=utf-8
 from distutils.core import setup
+
+try:
+    import pypandoc
+    long_description = pypandoc.convert('README.md', 'rst')
+except (IOError, ImportError):
+    long_description = ''
+
 setup(
   name = 'permalink_adder',
-  version = '0.1.4',
+  version = '0.1.4.1',
   description = 'SEO tool for adding permalinks to text contained in Django apps databases.',
   author = u'Piotr Lizończyk',
   author_email = 'piotr.lizonczyk@gmail.com',
@@ -17,4 +24,5 @@ setup(
   packages = ['permalink_adder',
               'permalink_adder.management',
               'permalink_adder.management.commands'],
+  long_description=long_description,
 )
