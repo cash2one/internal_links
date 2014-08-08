@@ -18,16 +18,17 @@ def collect_text(app, model_name, fields):
 
 def find_text_occurrences(word, text):
     matches = []
-    rule = r'( |^)%s([ .,?!:;]|$)' % word
+    if len(word) > 0:
+        rule = r'( |^)%s([ .,?!:;]|$)' % word
 
-    match = re.finditer(rule, text, re.UNICODE | re.IGNORECASE)
-    for item in match:
-        print 'Found "%s" on %s. Context: "%s"' % (item.group(),
-                                                   item.span(),
-                                                   text[item.start() - 30 if item.start() > 30 else 0 :item.end() + 30])
-        matches.append({'word': item.group().strip(' .,?!:;'),
-                        'start': item.start() if item.group()[0].isalnum() else item.start() + 1,
-                        'end': item.end() if item.group()[-1].isalnum() else item.end() - 1})
+        match = re.finditer(rule, text, re.UNICODE | re.IGNORECASE)
+        for item in match:
+            print 'Found "%s" on %s. Context: "%s"' % (item.group(),
+                                                       item.span(),
+                                                       text[item.start() - 30 if item.start() > 30 else 0 :item.end() + 30])
+            matches.append({'word': item.group().strip(' .,?!:;'),
+                            'start': item.start() if item.group()[0].isalnum() else item.start() + 1,
+                            'end': item.end() if item.group()[-1].isalnum() else item.end() - 1})
 
     return matches
 
