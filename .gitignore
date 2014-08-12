@@ -1,0 +1,11 @@
+.idea
+
+# other
+*~
+*/*~
+*.pyc
+*.log
+
+# project files
+/logs/
+\.~*
