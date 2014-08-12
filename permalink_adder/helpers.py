@@ -41,7 +41,7 @@ def add_links(text, matches, url):
         prefix = text['content'][:match['start'] + offset]
         suffix = text['content'][match['end'] + offset:]
 
-        prefix_tag = '<a href="%s">' % url
+        prefix_tag = '<a href="{url}" alt="{alt}" title="{alt}">'.format(url=url, alt=match['word'])
         suffix_tag = '</a>'
         offset += len(prefix_tag) + len(suffix_tag)
 
