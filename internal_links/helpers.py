@@ -5,6 +5,15 @@ from django.db.models.loading import get_model
 def collect_text(app, model_name, fields):
     texts = []
     model = get_model(app, model_name)
+    if not fields:
+        print "\n No fields specified for model %s, starting lookup\n\n" % model_name
+        modelfields = model._meta.fields
+        for field in modelfields:
+            if field.__class__.__name__ in [u'CharField', u'TextField'] and field.name != 'id':
+                decision = raw_input('Do you want to use field %s? y/n: ' % field.name)
+                if decision.lower() in ['y', 'yes']:
+                    fields.append(field.name)
+
     for field in fields:
         objects = model.objects.all()
         for obj in objects:

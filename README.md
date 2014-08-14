@@ -2,7 +2,7 @@ internal_links
 =======
 SEO tool for adding links to text contained in Django apps databases.
 
-**Renamed package: https://pypi.python.org/pypi/permalink_adder**
+**Renamed old package: https://pypi.python.org/pypi/permalink_adder**
 
 # Installation
 Install with pip:
@@ -18,6 +18,9 @@ You need to specify where and what to look for in your Django app's settings in 
                                 'words': ['list', 'of', 'words', 'to', 'search'],
                                 'url': 'url_that_should_be_wrapped_around_found_text'
                                 'target': False}] # setting it to e.g. '_blank' will add target="_blank" tag to link
+                              
+Setting 'fields' to empty list will cause script to look up for fields in model (TextField and CharField). You'll have to
+manually accept each found field.
 
 Starting script with option `--start` will actually apply changes to database, instead of printing them out.
 
@@ -29,6 +32,9 @@ No output if there are no occurrences of words or when they're already wrapped.
 Without `--start` option, script will only print out proposed changes.
 
 # Changelog
+
+## 0.1.6 - 14.08.2014
+- **[new]** fields lookup if none given
 
 ## 0.1.5 - 14.08.2014
 - **[new]** custom target as an option in settings
