@@ -22,11 +22,12 @@ def find_text_occurrences(word, text):
     if len(word) > 0:
         rule = r'( |^)%s([ .,?!:;]|$)' % word
 
-        match = re.finditer(rule, text, re.UNICODE | re.IGNORECASE)
+        match = re.finditer(rule, text['content'], re.UNICODE | re.IGNORECASE)
         for item in match:
-            print 'Found "%s" on %s. Context: "%s"' % (item.group(),
-                                                       item.span(),
-                                                       text[item.start() - 30 if item.start() > 30 else 0 :item.end() + 30])
+            print 'Found "%s" on %s in model %s, field "%s". Context: "%s"' % (item.group(),
+                                                       item.span(), text['model'], text['field'],
+                                                       text['content'][item.start() - 30 if item.start() > 30
+                                                                                         else 0 :item.end() + 30])
             matches.append({'word': item.group().strip(' .,?!:;'),
                             'start': item.start() if item.group()[0].isalnum() else item.start() + 1,
                             'end': item.end() if item.group()[-1].isalnum() else item.end() - 1})
@@ -56,7 +57,7 @@ def add_permalinks(app, model_name, fields, words, url, dry_run=True):
     texts = collect_text(app, model_name, fields)
     for word in words:
         for text in texts:
-            matches = find_text_occurrences(word, text['content'])
+            matches = find_text_occurrences(word, text)
             objects = text['model'].objects.filter(pk=text['object_pk'])
             text = add_links(text, matches, url)
             if not dry_run:
@@ -65,5 +66,5 @@ def add_permalinks(app, model_name, fields, words, url, dry_run=True):
                     item.save()
             else:
                 if text['modified']:
-                    print '\nModified text:\n'
+                    print '\nModel: %s, field name: %s, modified text:\n' % (text['model'], text['field'])
                     print text['content'] + '\n'

@@ -9,3 +9,6 @@
 # project files
 /logs/
 \.~*
+
+dist/
+MANIFEST
