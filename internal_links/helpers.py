@@ -35,7 +35,7 @@ def find_text_occurrences(word, text):
     return matches
 
 
-def add_links(text, matches, url):
+def insert_links_to_text(text, matches, url):
     offset = 0
 
     for match in matches:
@@ -53,13 +53,13 @@ def add_links(text, matches, url):
     return text
 
 
-def add_permalinks(app, model_name, fields, words, url, dry_run=True):
+def add_links(app, model_name, fields, words, url, dry_run=True):
     texts = collect_text(app, model_name, fields)
     for word in words:
         for text in texts:
             matches = find_text_occurrences(word, text)
             objects = text['model'].objects.filter(pk=text['object_pk'])
-            text = add_links(text, matches, url)
+            text = insert_links_to_text(text, matches, url)
             if not dry_run:
                 for item in objects:
                     setattr(item, text['field'], text['content'])
