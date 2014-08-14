@@ -14,7 +14,7 @@ setup(
   author = u'Piotr Lizończyk',
   author_email = 'piotr.lizonczyk@gmail.com',
   url = 'https://github.com/deployed/internal_links',
-  download_url = 'https://github.com/deployed/internal_links/tarball/0.1.4.5',
+  download_url = 'https://github.com/deployed/internal_links/tarball/0.1.4.6',
   keywords = ['SEO'],
   classifiers = ['Development Status :: 2 - Pre-Alpha',
                  'Framework :: Django',
@@ -25,4 +25,5 @@ setup(
               'internal_links.management',
               'internal_links.management.commands'],
   long_description = long_description,
+  obsoletes=['permalink_adder']
 )

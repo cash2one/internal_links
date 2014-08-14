@@ -2,10 +2,12 @@ internal_links
 =======
 SEO tool for adding links to text contained in Django apps databases.
 
+**Renamed package: https://pypi.python.org/pypi/permalink_adder**
+
 # Installation
 Install with pip:
 
-    pip install permalink_adder
+    pip install internal_links
 
 # Usage
 You need to specify where and what to look for in your Django app's settings in this manner:
