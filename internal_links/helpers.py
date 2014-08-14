@@ -35,14 +35,18 @@ def find_text_occurrences(word, text):
     return matches
 
 
-def insert_links_to_text(text, matches, url):
+def insert_links_to_text(text, matches, url, target):
     offset = 0
 
     for match in matches:
         prefix = text['content'][:match['start'] + offset]
         suffix = text['content'][match['end'] + offset:]
 
-        prefix_tag = '<a href="{url}" alt="{alt}" title="{alt}">'.format(url=url, alt=match['word'])
+        prefix_tag = '<a href="{url}" alt="{alt}" title="{alt}"'.format(url=url, alt=match['word'])
+        if target:
+            prefix_tag += ' target="' + target + '"'
+        prefix_tag += '>'
+
         suffix_tag = '</a>'
         offset += len(prefix_tag) + len(suffix_tag)
 
@@ -53,13 +57,13 @@ def insert_links_to_text(text, matches, url):
     return text
 
 
-def add_links(app, model_name, fields, words, url, dry_run=True):
+def add_links(app, model_name, fields, words, url, target, dry_run=True):
     texts = collect_text(app, model_name, fields)
     for word in words:
         for text in texts:
             matches = find_text_occurrences(word, text)
             objects = text['model'].objects.filter(pk=text['object_pk'])
-            text = insert_links_to_text(text, matches, url)
+            text = insert_links_to_text(text, matches, url, target)
             if not dry_run:
                 for item in objects:
                     setattr(item, text['field'], text['content'])
