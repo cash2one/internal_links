@@ -9,12 +9,12 @@ except (IOError, ImportError):
 
 setup(
   name = 'internal_links',
-  version = '0.1.6.5',
+  version = '0.1.6.6',
   description = 'SEO tool for adding links to text contained in Django apps databases.',
   author = u'Piotr Lizończyk',
   author_email = 'piotr.lizonczyk@gmail.com',
   url = 'https://github.com/deployed/internal_links',
-  download_url = 'https://github.com/deployed/internal_links/tarball/0.1.6.5',
+  download_url = 'https://github.com/deployed/internal_links/tarball/0.1.6.6',
   keywords = ['SEO'],
   classifiers = ['Development Status :: 2 - Pre-Alpha',
                  'Framework :: Django',

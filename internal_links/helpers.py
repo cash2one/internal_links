@@ -6,11 +6,11 @@ def collect_text(app, model_name, fields):
     texts = []
     model = get_model(app, model_name)
     if not fields:
-        print "\n No fields specified for model %s, starting lookup\n\n" % model_name
+        print u"\n No fields specified for model %s, starting lookup\n\n" % model_name
         modelfields = model._meta.fields
         for field in modelfields:
             if field.__class__.__name__ in [u'CharField', u'TextField'] and field.name != 'id':
-                decision = raw_input('Do you want to use field %s? y/n: ' % field.name)
+                decision = raw_input(u'Do you want to use field %s? y/n: ' % field.name)
                 if decision.lower() in ['y', 'yes']:
                     fields.append(field.name)
 
@@ -39,7 +39,7 @@ def find_text_occurrences(word, text_dict):
 
     match = re.finditer(rule, content, re.UNICODE | re.IGNORECASE)
     for item in match:
-        print 'Found "%s" on %s in model %s, field "%s". Context: "%s"' % (item.group(),
+        print u'Found "%s" on %s in model %s, field "%s". Context: "%s"' % (item.group(),
                                                    item.span(), model, field,
                                                    content[item.start() - 30 if item.start() > 30
                                                                                      else 0 :item.end() + 30])
@@ -69,12 +69,12 @@ def insert_links_to_text(text, matches, url, target=False, max_occurrence=-1):
         prefix = text['content'][:match['start'] + offset]
         suffix = text['content'][match['end'] + offset:]
 
-        prefix_tag = '<a href="{url}" alt="{alt}" title="{alt}"'.format(url=url, alt=match['word'])
+        prefix_tag = u'<a href="{url}" alt="{alt}" title="{alt}"'.format(url=url, alt=match['word'])
         if target:
-            prefix_tag += ' target="' + target + '"'
-        prefix_tag += '>'
+            prefix_tag += u' target="' + target + '"'
+        prefix_tag += u'>'
 
-        suffix_tag = '</a>'
+        suffix_tag = u'</a>'
         offset += len(prefix_tag) + len(suffix_tag)
 
         text['content'] = prefix + prefix_tag + match['word'] + suffix_tag + suffix
@@ -108,5 +108,5 @@ def add_links(app, model_name, fields, words, url, target=False, occurrence=-1, 
                     item.save()
             else:
                 if text['modified']:
-                    print '\nModel: %s, field name: %s, modified text:\n' % (text['model'], text['field'])
+                    print u'\nModel: %s, field name: %s, modified text:\n' % (text['model'], text['field'])
                     print text['content'] + '\n'

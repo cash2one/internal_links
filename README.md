@@ -34,6 +34,9 @@ Without `--start` option, script will only print out proposed changes.
 
 # Changelog
 
+## 0.1.6.6 - 21.08.2014
+- **[fix]** unicode handling fixes
+
 ## 0.1.6.5 - 21.08.2014
 - **[new]** some tests
 - **[new]** set max occurrences to replace
