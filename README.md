@@ -16,8 +16,9 @@ You need to specify where and what to look for in your Django app's settings in 
                                 'model_name': 'your_model_name',
                                 'fields': ['list', 'of', 'fields', 'in', 'which', 'script', 'should', 'search'],
                                 'words': ['list', 'of', 'words', 'to', 'search'],
-                                'url': 'url_that_should_be_wrapped_around_found_text'
-                                'target': False}] # setting it to e.g. '_blank' will add target="_blank" tag to link
+                                'url': 'url_that_should_be_wrapped_around_found_text',
+                                'target': False, # optional, setting it to e.g. '_blank' will add target="_blank" tag to link
+                                'ocurrence': 1}] # optional, set max occurrences of word you want to wrap, wraps all by default
                               
 Setting 'fields' to empty list will cause script to look up for fields in model (TextField and CharField). You'll have to
 manually accept each found field.
@@ -32,6 +33,11 @@ No output if there are no occurrences of words or when they're already wrapped.
 Without `--start` option, script will only print out proposed changes.
 
 # Changelog
+
+## 0.1.6.5 - 21.08.2014
+- **[new]** some tests
+- **[new]** set max occurrences to replace
+- **[update]** refactoring
 
 ## 0.1.6 - 14.08.2014
 - **[new]** fields lookup if none given
